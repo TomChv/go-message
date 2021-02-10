@@ -6,5 +6,5 @@ import (
 )
 
 func Health(c *gin.Context) {
-	c.JSON(http.StatusOK, "OK")
+	c.String(http.StatusOK, "OK")
 }
