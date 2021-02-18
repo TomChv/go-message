@@ -2,6 +2,14 @@
 
 A simple Go API that manage users and message
 
+## Getting started
+
+Launch docker-compose
+
+```
+docker-compose up -d --build
+```
+
 ## Entities
 
 ### User
@@ -24,32 +32,23 @@ A simple Go API that manage users and message
 
 Quick description of routes exposed by Go-message API
 
-### Login
+### Check state
 
-Route: `xxx/login`<br> 
-Method: **POST**<br>
-Body:
-```
-{
-  username: "xxxx" // hashé
-  password: "xxxx" // hashé
-}
-```
+Route: `xxx/api/health`<br>
+Method: **GET**<br>
 Return:
- - **404** : User doesn't exist
- - **200** : User connected
- - **500** : Internal server error
- 
+ - **200**: OK
+
 ### Register
 
-Route: `xxx/register`<br>
+Route: `xxx/api/register`<br>
 Method: **POST**<br>
 Body:
 ```
 {
-  username: "xxxx" // hashé
-  password: "xxxx" // hashé
-  profilePicture: "xxxx" // non hashé
+  username: "xxxx"
+  password: "xxxx"
+  profilePicture: "xxxx"
 }
 ```
 Return:
@@ -57,30 +56,65 @@ Return:
  - **400** : Bad request
  - **403** : User already exist
  - **500** : Internal server error
+
+### Login
+
+Route: `xxx/api/login`<br> 
+Method: **POST**<br>
+Body:
+```
+{
+  username: "xxxx"
+  password: "xxxx"
+}
+```
+Return:
+ - **404** : User doesn't exist
+ - **200** : User connected
+ - **500** : Internal server error
+
+### Logout
+
+Route: `xxx/api/logout`<br>
+Method: **POST**
+Return:
+ - **200** : OK
+ - **401** : Unauthorized
+ - **404** : Not found
+ 
+ ### getRooms
+ 
+ Route: `xxx/api/room`<br>
+ Method: **GET**<br>
+ Return:
+  - **200** : Rooms
+  - **401** : User not connected
+  - **500** : Internal server error
+  
+ 
+### createRoom
+
+Route: `xxx/api/room`<br>
+Method: **POST**<br>
+Return:
+ - **201** : Room created (with roomID)
+ - **401** : User not connected
+ - **500** : Internal server error 
  
 ### joinRoom
 
-Route: `xxx/joinRoom?roomID=xxx`<br> 
+Route: `xxx/api/room/join?roomID=xxx`<br> 
 Method: **POST**<br>
 Return:
  - **200** : Room joined
  - **400** : Bad request
  - **401** : User not connected
  - **404** : Room not found
- - **500** : Internal server error
- 
-### createRoom
-
-Route: `xxx/createRoom`<br>
-Method: **POST**<br>
-Return:
- - **201** : Room created (with roomID)
- - **401** : User not connected
- - **500** : Internal server error
+ - **500** : Internal server error 
  
 ### roomMessage (GET)
 
-Route: `xxx/roomMessage?roomID=xxxx`<br>
+Route: `xxx/api/room/message?roomID=xxxx`<br>
 Method: **GET**<br>
 Return:
  - **200** : Room
@@ -91,7 +125,7 @@ Return:
  
 ### roomMessage (POST)
 
-Route: `xxx/roomMessage?roomID=xxxx`<br>
+Route: `xxx/api/room/message?roomID=xxxx`<br>
 Method: **POST**<br>
 Body:
 ```
@@ -108,7 +142,7 @@ Return:
  
 ### roomMessage (PUT)
 
-Route: `xxx/roomMessage?roomID=xxxx&messageID=xxx`<br>
+Route: `xxx/api/room/message?roomID=xxxx&messageID=xxx`<br>
 Method: **PUT**<br>
 Body:
 ```
@@ -125,7 +159,7 @@ Return:
 
 ### roomMessage (DELETE)
 
-Route: `xxx/roomMessage?roomID=xxxx&messageID=xxxx`<br>
+Route: `xxx/api/room/message?roomID=xxxx&messageID=xxxx`<br>
 Method: **DELETE**<br>
 Return:
  - **200** : Message deleted
