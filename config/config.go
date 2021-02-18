@@ -16,6 +16,12 @@ type config struct {
 		Host     string `envconfig:"DB_HOST" required:"true"`
 		Port     string `envconfig:"DB_PORT" required:"true"`
 	}
+	Redis struct {
+		Host     string `envconfig:"REDIS_HOST" required:"true"`
+		Port     string `envconfig:"REDIS_PORT" required:"true"`
+		Password string `envconfig:"REDIS_PASS" required:"true"`
+		Secret   string `envconfig:"REDIS_SECRET" required:"true"`
+	}
 }
 
 var Config config
